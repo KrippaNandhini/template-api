@@ -19,8 +19,9 @@ jobs:
       - name: Install project deps
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[test]"
-          pip install pre-commit  # if you prefer pre-commit separate
+          pip install -r requirements.txt
+          pip install pre-commit pytest pytest-cov
+          pip install -e .[dev]
 
       - name: Run pre-commit (ruff, black, mypy)
         run: pre-commit run --all-files
