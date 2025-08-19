@@ -33,8 +33,8 @@ repos:
         args: ["--config-file", "pyproject.toml"]
         # Make mypy's isolated env aware of your imports:
         additional_dependencies:
-          - fastapi
           - pydantic>=2
           - pydantic-settings>=2
           - prometheus-fastapi-instrumentator
           - types-requests
+          - fastapi

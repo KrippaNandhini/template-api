@@ -3,3 +3,4 @@ pydantic>=2
 pydantic-settings>=2
 prometheus-fastapi-instrumentator>=6
 uvicorn>=0.30
+requests>=2
