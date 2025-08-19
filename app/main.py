@@ -1,13 +1,13 @@
-from contextlib import asynccontextmanager
 import asyncio
 import logging
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 
-from .logging_config import setup_logging
 from . import settings
+from .logging_config import setup_logging
 
 setup_logging()
 log = logging.getLogger("template-api")
