@@ -12,8 +12,8 @@ exclude = ["venv", ".venv", ".tox", "build", "dist"]
 python_version = "3.11"
 strict = true
 warn_unused_configs = true
-mypy_path = "."
 files = ["app", "src", "tests"]
+mypy_path = "."
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
