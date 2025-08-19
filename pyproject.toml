@@ -12,8 +12,11 @@ exclude = ["venv", ".venv", ".tox", "build", "dist"]
 python_version = "3.11"
 strict = true
 warn_unused_configs = true
-# Limit what mypy scans (speeds up + avoids vendor dirs)
+mypy_path = "."
 files = ["app", "src", "tests"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
 
 # Third-party libs that don't ship complete stubs:
 [[tool.mypy.overrides]]
