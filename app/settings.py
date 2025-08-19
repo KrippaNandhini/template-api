@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     DB_HOST: str = "localhost"
     DB_PORT: int = 5432
     DB_NAME: str = "app"
+    # Build metadata (optionally set by CI)
+    BUILD_SHA: str | None = None
+    BUILD_DATE: str | None = None
 
     @property
     def DATABASE_URL(self) -> str:

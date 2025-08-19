@@ -20,21 +20,19 @@ pythonpath = ["."]
 
 # Third-party libs that don't ship complete stubs:
 [[tool.mypy.overrides]]
-module = ["fastapi.*", "prometheus_fastapi_instrumentator.*", "fastapi.testclient"]
+module = ["fastapi.*", "prometheus_fastapi_instrumentator.*", "fastapi.testclient", "prometheus_client.*"]
 ignore_missing_imports = true
 
 [project]
-name = "template-api"
-version = "0.1.0"
-requires-python = ">=3.11"
 dependencies = [
   "fastapi>=0.115",
   "pydantic>=2",
   "pydantic-settings>=2",
   "prometheus-fastapi-instrumentator>=6",
+  "prometheus-client>=0.20",
   "requests>=2",
   "uvicorn>=0.30",
-  "httpx==0.23.2"
+  "httpx==0.23.2",
 ]
 
 [project.optional-dependencies]
