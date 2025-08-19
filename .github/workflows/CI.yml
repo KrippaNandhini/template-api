@@ -30,7 +30,7 @@ jobs:
       # Install core dependencies first
       - name: Install core dependencies
         run: |
-          pip install fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn
+          pip install fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn httpx
 
       # Then try project-specific installations
       - name: Install project dependencies
