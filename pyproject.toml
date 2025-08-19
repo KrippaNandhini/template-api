@@ -1,45 +1,21 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["app"]
-
-[tool.hatch.build.targets.sdist]
-include = ["app", "pyproject.toml", "README.md"]
-
-[project]
-name = "template-api"
-version = "0.1.0"
-requires-python = ">=3.11"
-dependencies = [
-    "fastapi",
-    "uvicorn[standard]",
-    "pydantic-settings",
-    "prometheus-fastapi-instrumentator",
-    "python-json-logger"
-]
-
-[project.optional-dependencies]
-dev = ["pytest", "pytest-cov", "httpx", "ruff", "black", "mypy", "types-requests", "pyyaml", "yamllint"]
+[tool.black]
+line-length = 88
+target-version = ["py311"]
 
 [tool.ruff]
-line-length = 100
+line-length = 88
 target-version = "py311"
-
-[tool.black]
-line-length = 100
-target-version = ["py311"]
+lint.select = ["E","F","I","UP","B"]
+exclude = ["venv", ".venv", ".tox", "build", "dist"]
 
 [tool.mypy]
 python_version = "3.11"
 strict = true
-warn_unused_ignores = true
-plugins = ["pydantic.mypy"]
+warn_unused_configs = true
+# Limit what mypy scans (speeds up + avoids vendor dirs)
+files = ["app", "src", "tests"]
 
+# Third-party libs that don't ship complete stubs:
 [[tool.mypy.overrides]]
-module = "app.main"
-disable_error_code = ["misc"]
-disallow_subclassing_any = false
-
-
+module = ["fastapi.*", "prometheus_fastapi_instrumentator.*", "fastapi.testclient"]
+ignore_missing_imports = true
