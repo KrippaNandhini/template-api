@@ -20,30 +20,62 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      # ---- Install project deps, no matter how you declare them ----
-      - name: Install project dependencies (robust)
+      - name: Debug environment before installation
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          python --version
+          pip --version
+
+      # Install core dependencies first
+      - name: Install core dependencies
+        run: |
+          pip install fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn
+
+      # Then try project-specific installations
+      - name: Install project dependencies
         shell: bash
         run: |
           set -euxo pipefail
+          
+          # Try pyproject.toml installation if it exists
           if [ -f pyproject.toml ] && grep -q "^\[project\]" pyproject.toml; then
-            # Editable install + test extras if defined
-            pip install -e ".[test]" || true
+            echo "Installing from pyproject.toml..."
+            pip install -e ".[test]" || echo "pyproject.toml installation failed, continuing..."
           fi
-          pip install -U fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn
+          
+          # Try requirements.txt if it exists
           if [ -f requirements.txt ]; then
-            pip install -r requirements.txt || true
+            echo "Installing from requirements.txt..."
+            pip install -r requirements.txt || echo "requirements.txt installation failed, continuing..."
           fi
 
-      - name: Show key packages (sanity check)
+      - name: Verify critical imports
         run: |
-          python - << 'PY'
-          import importlib.util as iu
-          for m in ["pydantic", "pydantic_settings", "fastapi"]:
-              print(f"{m}: ", "OK" if iu.find_spec(m) else "MISSING")
-          PY
+          python -c "
+          import sys
+          sys.path.insert(0, '.')
+          
+          try:
+              import pydantic
+              print(f'pydantic version: {pydantic.__version__}')
+          except ImportError as e:
+              print(f'pydantic import failed: {e}')
+              
+          try:
+              from app.settings import Settings
+              print('app.settings import: OK')
+          except ImportError as e:
+              print(f'app.settings import failed: {e}')
+              
+          print('Python path:', sys.path[:3])
+          "
 
       - name: Install tooling
         run: pip install pre-commit pytest pytest-cov
+
+      - name: Show installed packages
+        run: pip list | grep -E "(pydantic|fastapi)"
 
       - name: Run pre-commit (ruff, black, mypy)
         run: pre-commit run --all-files
@@ -51,4 +83,4 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: .
-        run: pytest -q --maxfail=1 --disable-warnings
+        run: pytest -v --maxfail=1 --disable-warnings
