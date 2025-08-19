@@ -19,9 +19,8 @@ jobs:
       - name: Install project deps
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # test runner + hooks
-          pip install pre-commit pytest pytest-cov
+          pip install -e ".[test]"
+          pip install pre-commit  # if you prefer pre-commit separate
 
       - name: Run pre-commit (ruff, black, mypy)
         run: pre-commit run --all-files

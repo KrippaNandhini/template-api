@@ -22,3 +22,19 @@ pythonpath = ["."]
 [[tool.mypy.overrides]]
 module = ["fastapi.*", "prometheus_fastapi_instrumentator.*", "fastapi.testclient"]
 ignore_missing_imports = true
+
+[project]
+name = "template-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "pydantic>=2",
+  "pydantic-settings>=2",
+  "prometheus-fastapi-instrumentator>=6",
+  "requests>=2",
+  "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
