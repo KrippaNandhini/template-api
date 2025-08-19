@@ -1,5 +1,5 @@
 fastapi>=0.115
-pydantic>=2
+pydantic>=2.0.0
 pydantic-settings>=2
 prometheus-fastapi-instrumentator>=6
 uvicorn>=0.30

@@ -29,13 +29,10 @@ jobs:
             # Editable install + test extras if defined
             pip install -e ".[test]" || true
           fi
-
+          pip install -U fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt || true
           fi
-
-          # Safety belt: ensure core runtime deps are present for tests
-          pip install -U fastapi pydantic pydantic-settings prometheus-fastapi-instrumentator requests uvicorn
 
       - name: Show key packages (sanity check)
         run: |
