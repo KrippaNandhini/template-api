@@ -60,6 +60,15 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     stop = asyncio.Event()
     periodic_task = asyncio.create_task(_periodic_heartbeat(stop))
 
+    m.BUILD_INFO.info(
+        {
+            "app_name": settings.settings.APP_NAME,
+            "version": getattr(app, "version", "unknown"),
+            "build_sha": settings.settings.BUILD_SHA or "dev",
+            "build_date": settings.settings.BUILD_DATE or "dev",
+        }
+    )
+
     try:
         yield
     finally:

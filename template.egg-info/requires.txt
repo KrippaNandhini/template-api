@@ -1,8 +1,12 @@
 fastapi>=0.115
-pydantic>=2.0.0
+pydantic>=2
 pydantic-settings>=2
 prometheus-fastapi-instrumentator>=6
-uvicorn>=0.30
-requests>=2
-httpx==0.23.2
 prometheus-client>=0.20
+requests>=2
+uvicorn>=0.30
+httpx==0.23.2
+
+[test]
+pytest
+pytest-cov

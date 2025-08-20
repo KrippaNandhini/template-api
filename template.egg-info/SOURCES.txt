@@ -1,0 +1,17 @@
+LICENSE
+README.md
+pyproject.toml
+app/__init__.py
+app/logging_config.py
+app/main.py
+app/metrics.py
+app/py.typed
+app/settings.py
+template.egg-info/PKG-INFO
+template.egg-info/SOURCES.txt
+template.egg-info/dependency_links.txt
+template.egg-info/requires.txt
+template.egg-info/top_level.txt
+tests/test_contracts_smoke.py
+tests/test_health.py
+tests/test_metrics.py

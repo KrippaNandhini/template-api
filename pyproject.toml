@@ -24,6 +24,8 @@ module = ["fastapi.*", "prometheus_fastapi_instrumentator.*", "fastapi.testclien
 ignore_missing_imports = true
 
 [project]
+name = "template"
+version = "0.1.0"
 dependencies = [
   "fastapi>=0.115",
   "pydantic>=2",
